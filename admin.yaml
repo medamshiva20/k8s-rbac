@@ -37,7 +37,7 @@ data:
     - groups:
       - system:bootstrappers
       - system:nodes
-      rolearn: arn:aws:iam::436804090705:role/eksctl-eks-spot-cluster-nodegroup--NodeInstanceRole-D3uy2FrVGpmP
+      rolearn: arn:aws:iam::436804090705:role/eksctl-eks-spot-cluster-nodegroup--NodeInstanceRole-240KFoesTU14
       username: system:node:{{EC2PrivateDNSName}}
   mapUsers: |
     - groups:
@@ -46,8 +46,8 @@ data:
       username: siva
 kind: ConfigMap
 metadata:
-  creationTimestamp: "2023-12-02T17:21:53Z"
+  creationTimestamp: "2023-12-07T06:06:48Z"
   name: aws-auth
   namespace: kube-system
-  resourceVersion: "1300"
-  uid: 3db2b337-89d7-4222-9842-4daaa0010e2a
+  resourceVersion: "1368"
+  uid: b0c5821d-eaef-46df-8405-6686ab291436
