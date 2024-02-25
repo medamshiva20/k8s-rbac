@@ -3,7 +3,7 @@ kind: Namespace
 metadata:
  name: roboshop
 ---
-#Here’s an example Role in the “default” namespace that can be used to grant read access to pods:
+#Here’s an example Role in the roboshop namespace that can be used to grant read access to pods:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
@@ -19,15 +19,15 @@ rules:
 # A set of rules that specify what actions are allowed or denied on a particular Kubernetes resource across the entire cluster
 # A binding that associates the ClusterRole with a user or service account across the entire cluster
 
-# apiVersion: rbac.authorization.k8s.io/v1
-# kind: ClusterRole
-# metadata:
-#   # "namespace" omitted since ClusterRoles are not namespaced
-#   name: secret-reader
-# rules:
-# - apiGroups: ["v1","apps/v1",""]
-#   resources: ["secrets","nodes","namespaces","persistentvolumes"]
-#   verbs: ["get", "watch", "list"]
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  # "namespace" omitted since ClusterRoles are not namespaced
+  name: roboshop-cluster-reader
+rules:
+- apiGroups: ["v1","apps/v1",""]
+  resources: ["secrets","nodes","namespaces","persistentvolumes"]
+  verbs: ["get", "watch", "list"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 # This role binding allows "jane" to read pods in the "default" namespace.
@@ -45,6 +45,20 @@ roleRef:
   # "roleRef" specifies the binding to a Role / ClusterRole
   kind: Role #this must be Role or ClusterRole
   name: roboshop-admin # this must match the name of the Role or ClusterRole you wish to bind to
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+# This cluster role binding allows anyone in the "manager" group to read secrets in any namespace.
+kind: ClusterRoleBinding
+metadata:
+  name: roboshop-cluster-reader
+subjects:
+- kind: User
+  name: siva # Name is case sensitive
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: roboshop-cluster-reader
   apiGroup: rbac.authorization.k8s.io
 ---
 # I am informing EKS cluster to There is siva user you should assign role to that user
